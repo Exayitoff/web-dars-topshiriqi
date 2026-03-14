@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Web Lib | Zamonaviy online kutubxona{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Bilim uchun yaratilgan makon</p>
+      <h1>Kitoblarni topish, saqlash va o‘qishni yoqimli jarayonga aylantiring.</h1>
+      <p class="hero-lead">Web Lib o‘quvchi, talaba va dasturchilar uchun tayyorlangan ko‘p sahifali kutubxona sayti. Endi u Django backend bilan ishlaydi va kontakt xabarlarini saqlaydi.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="{% url 'books' %}">Katalogni ochish</a>
+        <a class="button button-secondary" href="#featured-books">Tavsiya etilganlar</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>1200+</strong><span>raqamli nashrlar</span></div>
+        <div><strong>24</strong><span>tematik kolleksiya</span></div>
+        <div><strong>98%</strong><span>foydalanuvchi mamnunligi</span></div>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      {% if secondary_featured_book %}
+        <div class="floating-card card-accent">
+          <span>Hafta kitobi</span>
+          <strong>{{ secondary_featured_book.title }}</strong>
+          <p>{{ secondary_featured_book.summary }}</p>
+        </div>
+      {% endif %}
+      <div class="hero-showcase">
+        {% if primary_featured_book %}
+          <article class="showcase-book">
+            <span class="badge">Top tanlov</span>
+            <h2>{{ primary_featured_book.title }}</h2>
+            <p>{{ primary_featured_book.summary }}</p>
+          </article>
+        {% endif %}
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong>Backend tayyor</strong>
+            <p>Django view, template va forma oqimi ulandi.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Qulay</strong>
+            <p>Janr, muallif va mavzu bo‘yicha saralash.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Afzalliklar</p>
+        <h2>Kutubxona emas, to‘liq o‘qish tajribasi</h2>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h3>Template asosida</h3>
+        <p>Takroriy header va footer endi bitta `base.html` orqali boshqariladi.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Backend oqimi</h3>
+        <p>Kontakt forma xabarlari endi SQLite bazaga yoziladi.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Keyingi bosqichga tayyor</h3>
+        <p>Kitoblarni keyin admin panel yoki model orqali boshqarish osonlashdi.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-muted" id="featured-books">
+  <div class="container">
+    <div class="section-heading row-between">
+      <div>
+        <p class="eyebrow">Tanlangan kitoblar</p>
+        <h2>Eng ko‘p o‘qilayotgan nashrlar</h2>
+      </div>
+      <a class="text-link" href="{% url 'books' %}">Barcha kitoblarni ko‘rish</a>
+    </div>
+
+    <div class="book-grid">
+      {% for book in featured_books %}
+        <article class="book-card" data-book-card data-category="{{ book.category }}">
+          <img src="{{ book.image }}" alt="{{ book.title }} kitobi">
+          <div class="book-content">
+            <span class="book-tag">{{ book.category_label }}</span>
+            <h3>{{ book.title }}</h3>
+            <p class="meta">{{ book.author }}</p>
+            <p>{{ book.description }}</p>
+            <a class="text-link" href="{{ book.get_absolute_url }}">Batafsil</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container promo-panel">
+    <div>
+      <p class="eyebrow">Yo‘nalishlar</p>
+      <h2>Har bir o‘quvchi uchun alohida oqim</h2>
+    </div>
+    <div class="pill-row">
+      <a class="pill" href="{% url 'books' %}?genre=ilmiy">Akademik adabiyot</a>
+      <a class="pill" href="{% url 'books' %}?genre=dasturlash">Dasturlash</a>
+      <a class="pill" href="{% url 'books' %}?genre=tarix">Tarix</a>
+      <a class="pill" href="{% url 'books' %}?q=biznes">Biznes</a>
+      <a class="pill" href="{% url 'books' %}?q=psixologiya">Psixologiya</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: weblib
+    runtime: python
+    buildCommand: bash build.sh
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: your-service-name.onrender.com
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS
+        value: https://your-service-name.onrender.com
+      - key: DJANGO_SECURE_SSL_REDIRECT
+        value: "True"
+      - key: DJANGO_SECURE_HSTS_SECONDS
+        value: "31536000"
+      - key: DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS
+        value: "True"
+      - key: DJANGO_SECURE_HSTS_PRELOAD
+        value: "True"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: weblib-db
+          property: connectionString
+  - type: pserv
+    name: weblib-db
+    plan: free
+    ipAllowList: []

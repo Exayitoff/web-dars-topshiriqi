@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Web Lib | {{ book.title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-books">
+  <div class="container">
+    <p class="eyebrow">Kitob tafsiloti</p>
+    <h1>{{ book.title }}</h1>
+    <p class="page-lead">{{ book.summary }}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail-layout">
+    <div class="detail-cover">
+      <img src="{{ book.image }}" alt="{{ book.title }} kitobi">
+    </div>
+    <div class="detail-panel">
+      <span class="book-tag">{{ book.category_label }}</span>
+      <h2>Kitob haqida</h2>
+      <p class="meta">Muallif: {{ book.author }}</p>
+      <p>{{ book.description }}</p>
+      <div class="detail-stats">
+        <div><strong>{{ book.pages }}</strong><span>sahifa</span></div>
+        <div><strong>{{ book.level }}</strong><span>daraja</span></div>
+        <div><strong>{{ book.year }}</strong><span>nashr</span></div>
+      </div>
+      <div class="hero-actions">
+        <a class="button button-primary" href="{% url 'contact' %}">Band qilish</a>
+        <a class="button button-secondary" href="{% url 'books' %}?genre={{ book.category }}">Shu janrga qaytish</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-muted">
+  <div class="container split-panel">
+    <div>
+      <p class="eyebrow">Nimalarni o‘rganasiz</p>
+      <h2>Kitob tarkibi</h2>
+    </div>
+    <div class="advice-list">
+      <article>
+        <h3>Asoslar</h3>
+        <p>Asosiy tushunchalar, struktura va mavzuga kirish bo‘limlari.</p>
+      </article>
+      <article>
+        <h3>Amaliy blok</h3>
+        <p>Real misollar, mashqlar va qo‘llashga tayyor yondashuvlar.</p>
+      </article>
+      <article>
+        <h3>Mustahkamlash</h3>
+        <p>Keyingi bosqichga o‘tish uchun tavsiya va qo‘shimcha o‘qish yo‘nalishlari.</p>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

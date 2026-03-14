@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Web Lib | Kitoblar katalogi{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-books">
+  <div class="container">
+    <p class="eyebrow">Katalog</p>
+    <h1>Barcha kitoblar bitta sahifada</h1>
+    <p class="page-lead">Qidiruv oynasi va janr tugmalari orqali kerakli nashrni tez toping.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="toolbar">
+      <label class="search-field">
+        <span>Qidiruv</span>
+        <input type="text" placeholder="Kitob yoki muallifni yozing..." value="{{ search_query }}" data-book-search>
+      </label>
+      <div class="filter-group" data-filter-group>
+        <button class="filter-chip {% if active_genre == 'all' %}is-active{% endif %}" type="button" data-filter="all">Barchasi</button>
+        <button class="filter-chip {% if active_genre == 'dasturlash' %}is-active{% endif %}" type="button" data-filter="dasturlash">Dasturlash</button>
+        <button class="filter-chip {% if active_genre == 'ilmiy' %}is-active{% endif %}" type="button" data-filter="ilmiy">Ilmiy</button>
+        <button class="filter-chip {% if active_genre == 'badiiy' %}is-active{% endif %}" type="button" data-filter="badiiy">Badiiy</button>
+        <button class="filter-chip {% if active_genre == 'tarix' %}is-active{% endif %}" type="button" data-filter="tarix">Tarix</button>
+      </div>
+    </div>
+
+    <div class="book-grid" data-book-list>
+      {% for book in books %}
+        <article class="book-card detailed" data-book-card data-category="{{ book.category }}" data-title="{{ book.title|lower }}" data-author="{{ book.author|lower }}">
+          <img src="{{ book.image }}" alt="{{ book.title }} kitobi">
+          <div class="book-content">
+            <span class="book-tag">{{ book.category_label }}</span>
+            <h3>{{ book.title }}</h3>
+            <p class="meta">{{ book.author }}</p>
+            <p>{{ book.summary }}</p>
+            <a class="text-link" href="{% url 'book_detail' book.slug %}">Batafsil</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <p class="empty-state" data-empty-state hidden>Hech narsa topilmadi. Qidiruv so‘zini yoki janrni o‘zgartiring.</p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Web Lib | Aloqa{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-contact">
+  <div class="container">
+    <p class="eyebrow">Aloqa</p>
+    <h1>Savol, buyurtma yoki hamkorlik uchun yozing</h1>
+    <p class="page-lead">Kutubxona xizmatlari, tavsiyalar va kitob band qilish bo‘yicha sizga qaytamiz.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-layout">
+    <div class="contact-card">
+      <p class="eyebrow">Bog‘lanish</p>
+      <h2>Bir ish kuni ichida javob beramiz</h2>
+      <div class="contact-list">
+        <a href="mailto:hello@weblib.uz">hello@weblib.uz</a>
+        <a href="tel:+998901234567">+998 90 123 45 67</a>
+        <p>Toshkent shahri, Yunusobod tumani</p>
+        <p>Dushanba - Shanba, 09:00 - 18:00</p>
+      </div>
+    </div>
+
+    <form class="contact-form" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <label>
+          <span>{{ field.label }}</span>
+          {{ field }}
+          {% if field.errors %}
+            <small class="form-error">{{ field.errors|join:', ' }}</small>
+          {% endif %}
+        </label>
+      {% endfor %}
+      <button class="button button-primary" type="submit">Xabar yuborish</button>
+      {% if messages %}
+        <div class="message-list">
+          {% for message in messages %}
+            <p class="form-feedback">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </form>
+  </div>
+</section>
+{% endblock %}

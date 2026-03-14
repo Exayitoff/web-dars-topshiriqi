@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Web Lib | Janrlar{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-genres">
+  <div class="container">
+    <p class="eyebrow">Janrlar</p>
+    <h1>Qiziqishingizga mos yo‘nalishni tanlang</h1>
+    <p class="page-lead">Har bir janr uchun alohida uslubdagi kitoblar va o‘quv oqimlari mavjud.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container genre-grid">
+    {% for genre in genres %}
+      <article class="genre-card">
+        <span class="genre-index">{{ genre.index }}</span>
+        <h2>{{ genre.title }}</h2>
+        <p>{{ genre.description }}</p>
+        <a class="text-link" href="{% url 'books' %}?genre={{ genre.slug }}">Katalogga o‘tish</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-muted">
+  <div class="container split-panel">
+    <div>
+      <p class="eyebrow">Tavsiyalar</p>
+      <h2>O‘qish yo‘nalishini qanday tanlash kerak?</h2>
+    </div>
+    <div class="advice-list">
+      <article>
+        <h3>Maqsadingizni belgilang</h3>
+        <p>Imtihon, kasbiy rivojlanish yoki shaxsiy o‘sish uchun alohida yo‘nalish tanlang.</p>
+      </article>
+      <article>
+        <h3>Yengildan boshlang</h3>
+        <p>Asosiy tushunchalarni beradigan kitoblardan keyin murakkabroq materiallarga o‘ting.</p>
+      </article>
+      <article>
+        <h3>Ketma-ketlikni saqlang</h3>
+        <p>Bir janr ichida 3-4 ta bog‘liq kitobni ketma-ket o‘qish natijani sezilarli oshiradi.</p>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

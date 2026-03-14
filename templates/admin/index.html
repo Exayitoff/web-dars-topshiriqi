@@ -1,0 +1,71 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+  <section class="admin-hero admin-hero-grid">
+    <div>
+      <p class="admin-kicker">Dashboard</p>
+      <h2>Kontent, janrlar va foydalanuvchi xabarlarini bir joydan boshqaring.</h2>
+      <p class="admin-hero-copy">Kutubxona oqimi, katalog holati va foydalanuvchi aloqalarini bir ekranda kuzatish uchun yig‘ilgan boshqaruv markazi.</p>
+    </div>
+    <div class="admin-hero-metrics admin-hero-metrics-grid">
+      <div class="metric-card">
+        <span>Kitoblar</span>
+        <strong>{{ admin_total_books }}</strong>
+      </div>
+      <div class="metric-card">
+        <span>Janrlar</span>
+        <strong>{{ admin_total_genres }}</strong>
+      </div>
+      <div class="metric-card">
+        <span>Xabarlar</span>
+        <strong>{{ admin_total_messages }}</strong>
+      </div>
+      <div class="metric-card">
+        <span>Featured</span>
+        <strong>{{ admin_featured_books }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="admin-dashboard-grid">
+    <div class="admin-dashboard-panel admin-dashboard-panel-wide">
+      <div class="panel-head">
+        <div>
+          <p class="admin-kicker">Modullar</p>
+          <h3>Boshqaruv bo‘limlari</h3>
+        </div>
+      </div>
+      <div id="content-main">
+        {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+      </div>
+    </div>
+
+    <aside class="admin-dashboard-panel admin-dashboard-sidebar">
+      <div class="panel-head">
+        <div>
+          <p class="admin-kicker">So‘nggi aloqalar</p>
+          <h3>Oxirgi xabarlar</h3>
+        </div>
+      </div>
+
+      <div class="message-stream">
+        {% for message in admin_recent_messages %}
+          <article class="message-card">
+            <div class="message-card-top">
+              <strong>{{ message.name }}</strong>
+              <span>{{ message.created_at|date:"d M Y" }}</span>
+            </div>
+            <p class="message-subject">{{ message.subject }}</p>
+            <a href="{% url 'admin:library_contactmessage_change' message.id %}">{{ message.email }}</a>
+          </article>
+        {% empty %}
+          <div class="message-card message-card-empty">
+            <strong>Hozircha xabar yo‘q</strong>
+            <p>Foydalanuvchi xabarlari shu yerda paydo bo‘ladi.</p>
+          </div>
+        {% endfor %}
+      </div>
+    </aside>
+  </section>
+{% endblock %}

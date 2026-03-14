@@ -1,0 +1,54 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block content %}
+  <div class="login-shell">
+    <section class="login-panel login-panel-intro">
+      <p class="admin-kicker">Web Lib Admin</p>
+      <h1>Kutubxona boshqaruviga xush kelibsiz.</h1>
+      <p>Kitoblar katalogi, janrlar va foydalanuvchi xabarlarini xavfsiz boshqaring.</p>
+      <ul class="login-highlights">
+        <li>Kontentni tartibli boshqarish</li>
+        <li>Estetik va tezkor admin muhiti</li>
+        <li>Faqat ichki foydalanish uchun</li>
+      </ul>
+    </section>
+
+    <section class="login-panel login-panel-form">
+      {% if form.errors and not form.non_field_errors %}
+        <p class="errornote">{% translate "Please correct the error below." %}</p>
+      {% endif %}
+      {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errornote">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+
+      <form action="{{ app_path }}" method="post" id="login-form">
+        {% csrf_token %}
+        <div class="form-row">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+        </div>
+        <div class="form-row">
+          {{ form.password.label_tag }}
+          {{ form.password }}
+          <input type="hidden" name="next" value="{{ next }}">
+        </div>
+        {% url 'admin_password_reset' as password_reset_url %}
+        {% if password_reset_url %}
+          <div class="password-reset-link">
+            <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+          </div>
+        {% endif %}
+        <div class="submit-row">
+          <input type="submit" value="{% translate 'Log in' %}">
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}
